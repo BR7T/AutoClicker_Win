@@ -1,4 +1,10 @@
 import sys
+if sys.platform.startswith("win"):
+    import ctypes
+    try:
+        ctypes.windll.shcore.SetProcessDpiAwareness(2)
+    except Exception:
+        ctypes.windll.user32.SetProcessDPIAware()
 
 from pynput import mouse, keyboard
 from pynput.mouse import Controller , Button
@@ -105,7 +111,7 @@ def autoClickLoop():
         for x,y in State.position:
             if not State.running:
                 break
-            user32.SetCursorPos(int(x+9) , int(y))
+            user32.SetCursorPos(int(x+10) , int(y))
             mouserController.click(button=Button.left , count=1)
             time.sleep(State.click_delay)
 
